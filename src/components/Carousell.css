@@ -1,0 +1,10 @@
+.hero-carousel .carousel-item {
+  height: 500px;
+}
+
+.hero-carousel .carousel-item img {
+  height: 50%;
+  width: 50%;
+  object-fit: cover;
+  object-position: center;
+}

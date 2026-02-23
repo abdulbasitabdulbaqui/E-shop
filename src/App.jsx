@@ -4,7 +4,7 @@ import Discover from "./components/Discover";
 import { Routes, Route } from "react-router-dom";
 import Products from "./components/Products";
 import About from "./components/About";
-import SignUp from "./components/Signup";
+import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 
 const App = () => {

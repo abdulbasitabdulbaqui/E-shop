@@ -22,7 +22,6 @@ const NavBar = () => {
         {/* Left Side - Welcome + Login */}
         <div className="col-12 col-md-6 d-flex flex-wrap align-items-center gap-2">
           <span>Welcome to my E-shop</span>
-          <span>OR</span>
           <Button
             onClick={handleLogin}
             variant="link"

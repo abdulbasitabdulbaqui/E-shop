@@ -4,7 +4,9 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Loader from "./Loader";
 import "./products.css";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { Col } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -15,8 +17,14 @@ const Products = () => {
   const [itemPerPage, setItemPerPage] = useState(8);
   const indexOfLastItem = currentPage * itemPerPage;
   const indexOfFirstItem = indexOfLastItem - itemPerPage;
-  const pages = products.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(products.length / itemPerPage);
+  const search = searchParams.get("search") || "";
+  const searched = products.filter((item) =>
+    item.title.toLowerCase().includes(search.toLowerCase()),
+  );
+    const navigate = useNavigate();
+  const pages = searched.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(searched.length / itemPerPage);
+
   const safeCurrentPage =
     currentPage > totalPages && totalPages !== 0 ? totalPages : currentPage;
 
@@ -44,14 +52,27 @@ const Products = () => {
 
   if (error) return <div className="alert alert-danger">{error}</div>;
   if (isLoading) return <div className="mt-5">{<Loader />}</div>;
+  const handleSearch = (e) => {
+    setSearchParams({ page: 1, search: e.target.value });
+  };
 
   return (
     <>
+      <Col>
+        <Form.Control
+          value={search}
+          onChange={handleSearch}
+          type="text"
+          placeholder="Search"
+          className="mt-3 w-25 ms-5 border-danger"
+        />
+      </Col>
       <div className="container mt-5">
         <div className="row">
           {pages.map((item) => (
             <div className="col-12 col-md-6 col-lg-3 mb-4 d-flex" key={item.id}>
               <Card
+                onClick={() => navigate(`/products/${item.id}`)}
                 className="w-100 h-80 d-flex flex-column shadow-sm liftCard"
                 style={{ cursor: "pointer" }}
               >
@@ -63,8 +84,8 @@ const Products = () => {
                 <Card.Body className="d-flex flex-column">
                   <Card.Title>{item?.title}</Card.Title>
                   <Card.Text>{item?.description}</Card.Text>
-                  <Button className="mt-auto" variant="outline-danger">
-                    Go somewhere
+                  <Button  onClick={() => navigate(`/products/${item.id}`)} className="mt-auto" variant="outline-danger">
+                    learn more...
                   </Button>
                 </Card.Body>
               </Card>

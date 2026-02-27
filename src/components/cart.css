@@ -1,0 +1,75 @@
+/* ===== Wrapper Top Spacing ===== */
+.cart-wrapper {
+  margin-top: 100px;   /* more space from top */
+  margin-bottom: 80px;
+}
+
+/* ===== Bigger Cart Card ===== */
+.cart-card {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  background: #ffffff;
+  padding: 35px;              /* bigger padding */
+  border-radius: 18px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
+  margin-bottom: 35px;
+  transition: 0.3s ease;
+}
+
+.cart-card:hover {
+  transform: translateY(-4px);
+}
+
+/* ===== Bigger Image ===== */
+.cart-img img {
+  width: 180px;      /* increased */
+  height: 180px;
+  object-fit: contain;
+  background: #fafafa;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+/* ===== Info Section ===== */
+.cart-info {
+  flex: 1;
+}
+
+/* Title */
+.cart-info h5 {
+  font-weight: 600;
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+/* ===== Quantity Section ===== */
+.quantity-box {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+/* Bigger Buttons */
+.quantity-box button {
+  width: 45px;
+  height: 45px;
+  font-size: 20px;
+  border-radius: 10px;
+}
+
+/* Quantity Number */
+.qty-number {
+  font-weight: 600;
+  font-size: 20px;
+  min-width: 35px;
+  text-align: center;
+}
+
+/* Delete Button */
+.delete-btn {
+  padding: 10px 22px;
+  font-size: 15px;
+  border-radius: 30px;
+}

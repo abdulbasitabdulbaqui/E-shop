@@ -48,10 +48,10 @@ const About = () => {
       </div>
       <div className="container">
         <div className="row">
-          <div className="col-12 col-md-6">
+          <div className="col-12 col-md-6 mt-5">
             <img data-aos="fade-right" className="img-fluid mt-4" src={last} alt="" />
           </div>
-          <div className="col-12 col-md-6 mt-4">
+          <div className="col-12 col-md-6 mt-5">
             <h2 data-aos="fade-left">🚀 Why Choose E-Shope?</h2>
             <p data-aos="fade-left" className="mt-4 p-3">
               At E-Shope, we believe shopping should be simple, secure, and

@@ -10,25 +10,23 @@ const NavBar = () => {
   };
 
   const handleTitle = () => {
-     navigate("/");
-  }
+    navigate("/");
+  };
+  const handleLogin = () => {
+    navigate("/login");
+  };
   return (
     <div className="container">
       <div className="row border-bottom p-1 mt-2">
         <div className="col-12 col-md-6">
           <span>Welcome to my E-shop</span>
+          <span> OR</span>
           <span>
             <Button
-              onClick={handleRegister}
-              className="text-danger"
+              onClick={handleLogin}
               variant="link"
+              className="text-danger"
             >
-              Registor
-            </Button>
-          </span>
-          <span>OR</span>
-          <span>
-            <Button variant="link" className="text-danger">
               Login
             </Button>
           </span>
@@ -51,8 +49,18 @@ const NavBar = () => {
                   About-us
                 </Nav.Link>
               </Nav.Item>
-              <Nav.Link onClick={handleTitle} className="ms-5 text-success" as={NavLink} to="/">
-               <h5>E-shop🛒</h5> 
+              <Nav.Item as="li">
+                <Nav.Link as={NavLink} to="/cart">
+                  cart
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Link
+                onClick={handleTitle}
+                className="ms-5 text-success"
+                as={NavLink}
+                to="/"
+              >
+                <h5>E-shop🛒</h5>
               </Nav.Link>
             </Nav>
           </Navbar>

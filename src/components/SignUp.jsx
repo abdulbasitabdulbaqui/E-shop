@@ -13,11 +13,12 @@ const SignUp = () => {
     confirmPassword: "",
   });
   const [formError, setFormError] = useState({
-    username: null,
-    mobileNumber: null,
-    email: null,
-    password: null,
-    confirmPassword: null,
+    username: "",
+    mobileNumber: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    fetchError: "",
   });
 
   const handleChange = (e) => {
@@ -28,6 +29,10 @@ const SignUp = () => {
       ...prevData,
       [name]: value,
     }));
+    setFormError({
+      ...formError,
+      [name]: "",
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -76,33 +81,57 @@ const SignUp = () => {
     } else if (formData.mobileNumber.length > 10) {
       setFormError({
         ...formError,
-        mobileNumber: "Max character of number should be 10",
+        mobileNumber: "Max Character of number should be 10",
       });
+      return;
+    } else {
+      setFormError({ ...formError, username: "" });
     }
 
     if (formData.email.length < 3) {
-      setEmailError("Min character of email should be 3");
+      setFormError({
+        ...formError,
+        email: "Min character of email should be 3",
+      });
       return;
     } else {
-      setEmailError("");
+      setFormError({
+        ...formError,
+        email: "",
+      });
     }
 
     if (formData.password.length < 7) {
-      setCreatePassWordError("Min character of PassWord should be 7");
+      setFormError({
+        ...formError,
+        password: "Min character of PassWord should be 7",
+      });
       return;
     } else {
-      setCreatePassWordError("");
+      setFormError({
+        ...formError,
+        password: "",
+      });
     }
 
     if (formData.confirmPassword.length < 7) {
-      setConfirmPasswordError("Min character of confirmPassword should be 7");
+      setFormError({
+        ...formError,
+        confirmPassword: "Min character of confirmPassword should be 7",
+      });
       return;
     } else {
-      setConfirmPasswordError("");
+      setFormError({
+        ...formError,
+        confirmPassword: "",
+      });
     }
 
     if (formData.password !== formData.confirmPassword) {
-      return setConfirmPasswordError("passwords not matched");
+      return setFormError({
+        ...formError,
+        confirmPassword: "password not matched",
+      });
     }
 
     try {
@@ -117,10 +146,20 @@ const SignUp = () => {
         },
       );
       alert("Registration successfully Done");
-      setFormData({});
     } catch (error) {
       console.log(error.response?.data?.message || "Registration failed");
+      setFormError({
+        ...formError,
+        fetchError: error?.response?.data?.message || "Registration failed",
+      });
     }
+    setFormData({
+      username: "",
+      mobileNumber: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
   };
   const navigate = useNavigate();
   const handleLogin = () => {
@@ -136,6 +175,11 @@ const SignUp = () => {
         <div className="d-flex justify-content-center col-11 col-sm-10 col-md-8 col-lg-6 col-xl-4 shadow p-3 mb-5 bg-white rounded shadow-lg ">
           <div className="w-100 mt-5">
             <div style={{ textAlign: "center" }}>
+              {formError.fetchError && (
+                <h2 className="text-danger text-center">
+                  {formError?.fetchError}
+                </h2>
+              )}
               <h1>Sign-Up Form</h1>
             </div>
             <label className={`${formError?.username ? "text-danger" : ""}`}>
@@ -163,7 +207,7 @@ const SignUp = () => {
             <input
               name="mobileNumber"
               style={{ padding: "10px", width: "90%" }}
-              type="text"
+              type="tel"
               placeholder="Enter Your Number"
               onChange={handleChange}
               value={formData.mobileNumber}

@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -22,3 +23,10 @@ jobs:
 
       - name: Test AWS Connection
         run: aws sts get-caller-identity
+
+      - name: Run command on EC2
+        run: |
+          aws ssm send-command \
+            --instance-ids i-06f806dae5c365ed7 \
+            --document-name "AWS-RunShellScript" \
+            --parameters 'commands=["whoami", "hostname", "pwd"]'

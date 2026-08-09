@@ -1,4 +1,4 @@
-name: AWS OIDC Test
+name: React App Deployment
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,16 +24,17 @@ jobs:
       - name: Test AWS Connection
         run: aws sts get-caller-identity
 
-      - name: Run command on EC2
+      - name: Deploy React App to EC2
         run: |
           aws ssm send-command \
             --instance-ids i-06f806dae5c365ed7 \
             --document-name "AWS-RunShellScript" \
-            --parameters 'commands=["whoami", "hostname", "pwd"]'
-
-      - name: Install Nginx on EC2
-        run: |
-          aws ssm send-command \
-            --instance-ids i-06f806dae5c365ed7 \
-            --document-name "AWS-RunShellScript" \
-            --parameters 'commands=["sudo dnf install nginx -y", "sudo systemctl enable nginx", "sudo systemctl start nginx"]'
+            --parameters 'commands=[
+              "cd /root/E-shop",
+              "git pull origin main",
+              "npm install",
+              "npm run build",
+              "sudo rm -rf /usr/share/nginx/html/*",
+              "sudo cp -r dist/* /usr/share/nginx/html/",
+              "sudo systemctl restart nginx"
+            ]'

@@ -30,3 +30,10 @@ jobs:
             --instance-ids i-06f806dae5c365ed7 \
             --document-name "AWS-RunShellScript" \
             --parameters 'commands=["whoami", "hostname", "pwd"]'
+
+      - name: Install Nginx on EC2
+        run: |
+          aws ssm send-command \
+            --instance-ids i-06f806dae5c365ed7 \
+            --document-name "AWS-RunShellScript" \
+            --parameters 'commands=["sudo dnf install nginx -y", "sudo systemctl enable nginx", "sudo systemctl start nginx"]'
